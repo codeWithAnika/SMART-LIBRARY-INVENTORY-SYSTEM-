@@ -93,24 +93,32 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 4. Configure Database Connection
-Update the database credentials in `app.py`:
-```python
-def get_db_connection():
-    dsn = oracledb.makedsn("localhost", 1521, service_name="XEPDB1")
-    return oracledb.connect(user="LIBDB", password="your_password", dsn=dsn)
+### 4. Create and Configure `.env` File
+
+Create a `.env` file in the project root directory and add the following environment variables:
+
+```env
+# Email Configuration
+MAIL_SERVER=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USE_TLS=True
+MAIL_USERNAME=your-email@gmail.com
+MAIL_PASSWORD=your-app-specific-password
+
+# Database Configuration (Optional - if using environment variables)
+DB_USER=LIBDB
+DB_PASSWORD=your-db-password
+DB_HOST=localhost
+DB_PORT=1521
+DB_SERVICE=XEPDB1
 ```
 
-### 5. Configure Email Notifications
-Update Gmail credentials in `app.py`:
-```python
-app.config['MAIL_USERNAME'] = 'your-email@gmail.com'
-app.config['MAIL_PASSWORD'] = 'your-app-specific-password'
-```
+> ⚠️ **IMPORTANT:** 
+> - Never commit the `.env` file to Git (it's in `.gitignore`)
+> - For email, generate an app-specific password from your Google Account settings: https://myaccount.google.com/apppasswords
+> - Replace placeholder values with your actual credentials
 
-> 💡 **Tip:** Generate an app-specific password from your Google Account settings: https://myaccount.google.com/apppasswords
-
-### 6. Run the Application
+### 5. Run the Application
 ```bash
 python app.py
 ```
